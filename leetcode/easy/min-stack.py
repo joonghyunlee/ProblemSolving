@@ -1,56 +1,63 @@
 class MinStack(object):
 
+    class StackNode(object):
+        def __init__(self, x, m, n=None):
+            self.val = x
+            self.min = m if m < x else x
+            self.next = n
+
     def __init__(self):
         """
         initialize your data structure here.
         """
-        self.stack = []
-        self.list = []
+        self.head = None
 
     def push(self, x):
         """
         :type x: int
         :rtype: void
         """
-        self.stack.append(x)
-        pos = 0
-        for i in range(len(self.list)):
-            if x > self.list[i]:
-                pos = i
-                break
-        print "push - pos: ", pos
-        print "push - self.list: ", self.list
-        self.list.insert(pos, x)
-        print "push - self.list: ", self.list
+        if self.head:
+            p = self.StackNode(x, self.head.min, self.head)
+            self.head = p
+        else:
+            self.head = self.StackNode(x, x)
 
     def pop(self):
         """
         :rtype: void
         """
-        x = self.stack.pop()
-        self.list.remove(x)
-        print "pop - self.list: ", self.list
+        if self.head:
+            self.head = self.head.next
 
     def top(self):
         """
         :rtype: int
         """
-        return self.stack[-1]
+        return self.head.val if self.head else None
 
     def getMin(self):
         """
         :rtype: int
         """
-        print "getMin - self.list: ", self.list
-        return self.list[-1]
+        return self.head.min if self.head else None
+
+    def printStack(self):
+        p = self.head
+        print "Stack: ",
+        while p:
+            print p.val,
+            p = p.next
+        print
 
 
 if __name__ == '__main__':
     ms = MinStack()
     ms.push(-2)
     ms.push(0)
-    ms.push(-3)
+    ms.push(-1)
+    ms.printStack()
     print ms.getMin()
-    #ms.pop()
-    #print ms.top()
-    #print ms.getMin()
+    print ms.top()
+    ms.pop()
+    print ms.getMin()
