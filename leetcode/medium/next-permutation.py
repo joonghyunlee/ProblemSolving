@@ -10,28 +10,29 @@ class Solution(object):
                 s += 1
                 e -= 1
 
-        i = len(nums) - 1
-        while i > 0:
-            if nums[i - 1] >= nums[i]:
-                break
+        i = len(nums) - 2
+        while i >= 0 and (nums[i] >= nums[i + 1]):
             i -= 1
 
-        j = len(nums) - 1
-        while j >= 0:
-            if nums[i] > nums[j]:
-                break
-            j -= 1
+        if i >= 0:
+            j = len(nums) - 1
+            while j >= 0:
+                if nums[i] < nums[j]:
+                    break
+                j -= 1
 
-        nums[i], nums[j] = nums[j], nums[i]
-
+            nums[i], nums[j] = nums[j], nums[i]
         rever(i + 1, len(nums) - 1)
 
 
 if __name__ == '__main__':
-    nums = [2, 1, 3]
+    nums = [1, 3, 2]
     s = Solution()
     s.nextPermutation(nums)
     print nums
     nums = [1, 5, 8, 4, 7, 6, 5, 3, 1]
+    s.nextPermutation(nums)
+    print nums
+    nums = [1, 2, 3]
     s.nextPermutation(nums)
     print nums
