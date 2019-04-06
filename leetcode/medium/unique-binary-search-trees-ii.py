@@ -15,6 +15,9 @@ class Solution(object):
         :type n: int
         :rtype: List[TreeNode]
         """
+        if n == 0:
+            return []
+
         def helper(l, r):
             if l > r:
                 return [None]
