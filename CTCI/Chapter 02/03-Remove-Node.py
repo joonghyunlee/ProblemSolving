@@ -3,6 +3,7 @@ class ListNode:
         self.next = None
         self.val = x
 
+
 class Solution:
     def remove(self, p):
         p.val = p.next.val
