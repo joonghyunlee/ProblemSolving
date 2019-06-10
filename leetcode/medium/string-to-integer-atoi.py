@@ -29,8 +29,10 @@ class Solution(object):
 
         if num is None:
             return 0
-        if num >= 0x80000000:
+        if signed and num >= 0x80000000:
             num = 0x80000000 - 1
+        elif not signed and num > 0x80000000:
+            num = 0x80000000
         return num if signed else -num
 
 
