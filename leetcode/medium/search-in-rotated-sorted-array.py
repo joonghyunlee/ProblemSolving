@@ -29,7 +29,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     s = Solution()
-    #r = s.search([4, 5, 6, 7, 0, 1, 2], 0)
-    #print r
+    r = s.search([4, 5, 6, 7, 0, 1, 2], 0)
+    print r
     r = s.search([5, 6, 7, 0, 1, 2, 3, 4], 4)
     print r
