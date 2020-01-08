@@ -10,6 +10,23 @@ class Solution(object):
 
         return max(s)
 
+    def rob2(self, nums):
+        n = len(nums)
+        sums = [0] * n
+        
+        if n == 0:
+            return 0
+        elif n <= 2:
+            return max(nums)
+        
+        sums[0] = nums[0]
+        sums[1] = nums[1]
+        
+        for i in range(2, n):
+            sums[i] = max(max(sums[0:i-1]) + nums[i], sums[i-1])
+            
+        return max(sums)
+
 
 if __name__ == '__main__':
     s = Solution()
