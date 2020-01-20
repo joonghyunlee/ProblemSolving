@@ -30,20 +30,22 @@ class Solution(object):
         return tp
 
     def reverseList2(self, head):
-        def getReverse(h):
-            if not h.next: return h, h
-
-            p, t = getReverse(h.next)
-            p.next = h
-
-            return h, t
-
-        if not head: return None
-
-        t, h = getReverse(head)
-        t.next = None
-
-        return h
+        def recursion(node):
+            if not node.next:
+                return node, node
+            
+            prev, tail = recursion(node.next)
+            prev.next = node
+                
+            return node, tail
+        
+        if not head:
+            return None
+        
+        tail, head = recursion(head)
+        tail.next = None
+        
+        return head
 
     def toLinkedList(self, nums):
         h = ListNode(0)
