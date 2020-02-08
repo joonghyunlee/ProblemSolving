@@ -20,7 +20,6 @@ class Solution(object):
                     memo[0][i] = max(memo[0][i], memo[1][j] + 1)
                 elif nums[j] < nums[i]:
                     memo[1][i] = max(memo[1][i], memo[0][j] + 1)
-        print memo
         return max(memo[0][-1], memo[1][-1])
 
 
