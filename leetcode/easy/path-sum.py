@@ -33,6 +33,17 @@ class Solution(object):
 
         return False
 
+    def hasPathSum2(self, root: TreeNode, sum: int) -> bool:
+        def helper(node, sum):
+            if not node:
+                return False
+            elif not node.left and not node.right:
+                return node.val == sum
+
+            return helper(node.left, sum - node.val) \
+                or helper(node.right, sum - node.val)
+        return helper(root, sum)
+
     def convert(self, nums):
         if not nums:
             return None
@@ -58,7 +69,11 @@ if __name__ == '__main__':
     s = Solution()
     root = s.convert([5, 4, 8, 11, None, 13, 4, 7, 2, None, 1])
     r = s.hasPathSum(root, 22)
-    print r
+    print(r)
+    r = s.hasPathSum2(root, 22)
+    print(r)
     root = s.convert([1])
     r = s.hasPathSum(root, 1)
-    print r
+    print(r)
+    r = s.hasPathSum2(root, 1)
+    print(r)
