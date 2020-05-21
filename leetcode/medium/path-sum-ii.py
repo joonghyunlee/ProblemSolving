@@ -5,6 +5,19 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+    @classmethod
+    def fromList(cls, nums):
+        n = len(nums)
+        nodes = [cls(num) if num is not None else None for num in nums]
+        for i, node in enumerate(nodes):
+            if node is None:
+                continue
+            if i * 2 + 1 < n:
+                node.left = nodes[i * 2 + 1]
+            if i * 2 + 2 < n:
+                node.right = nodes[i * 2 + 2]
+        return nodes[0] if n > 0 else None
+
 
 class Solution(object):
     def pathSum(self, root, su):
@@ -30,18 +43,31 @@ class Solution(object):
                 q.insert(0, (path + [n.right.val], n.right))
         return paths
 
+    def pathSum2(self, root: TreeNode, sum: int) -> 'List[List[int]]':
+        def helper(node: TreeNode, sum: int):
+            if not node:
+                return []
+            elif not (node.left or node.right) and node.val == sum:
+                return [[node.val]]
+
+            m = []
+            l = helper(node.left, sum - node.val)
+            for li in l:
+                li.insert(0, node.val)
+                m.append(li)
+            r = helper(node.right, sum - node.val)
+            for ri in r:
+                ri.insert(0, node.val)
+                m.append(ri)
+            return m
+        return helper(root, sum)
+
 
 if __name__ == '__main__':
     s = Solution()
-    root = TreeNode(5)
-    root.left = TreeNode(4)
-    root.right = TreeNode(8)
-    root.left.left = TreeNode(11)
-    root.right.left = TreeNode(13)
-    root.right.right = TreeNode(4)
-    root.left.left.left = TreeNode(7)
-    root.left.left.right = TreeNode(2)
-    root.right.right.left = TreeNode(5)
-    root.right.right.right = TreeNode(1)
+    root = TreeNode.fromList(
+        [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, 5, 1])
     r = s.pathSum(root, 22)
-    print r
+    print(r)
+    r = s.pathSum2(root, 22)
+    print(r)
