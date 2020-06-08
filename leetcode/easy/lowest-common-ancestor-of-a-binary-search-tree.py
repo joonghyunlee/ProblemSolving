@@ -5,6 +5,23 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+    def __repr__(self):
+        return str(self.val)
+
+    @classmethod
+    def fromList(cls, nums):
+        nodes = [cls(num) if num else None for num in nums]
+        for i, node in enumerate(nodes):
+            if node is None:
+                continue
+            li = 2 * i + 1
+            ri = 2 * i + 2
+            if li < len(nums):
+                node.left = nodes[li]
+            if ri < len(nums):
+                node.right = nodes[ri]
+        return nodes[0]
+
 
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
@@ -31,6 +48,19 @@ class Solution(object):
 
         common = [a for a in lancestor if a in rancestor]
         return common[-1] if common else None
+
+    def lowestCommonAncestor2(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def helper(node, p, q):
+            if not node:
+                return None
+
+            if p.val < node.val and q.val < node.val:
+                return helper(node.left, p, q)
+            elif p.val > node.val and q.val > node.val:
+                return helper(node.right, p, q)
+            return node
+
+        return helper(root, p, q)
 
 
     def convertToTree(self, nums):
@@ -76,7 +106,7 @@ class Solution(object):
         stack.append(root)
         while stack:
             p = stack.pop()
-            print p.val,
+            print(p.val, end='')
             if p.right:
                 stack.append(p.right)
             if p.left:
@@ -91,7 +121,7 @@ class Solution(object):
         queue.insert(0, root)
         while queue:
             p = queue.pop()
-            print p.val,
+            print(p.val, end='')
             if p.left:
                 queue.insert(0, p.left)
             if p.right:
@@ -102,6 +132,9 @@ class Solution(object):
 
 if __name__ == '__main__':
     s = Solution()
-    r = s.convertToTree([6, 2, 8, 0, 4, 7, 9, None, None, 3, 5])
-    c = s.lowestCommonAncestor(r[0], r[1], r[3])
-    print c.val
+    nums = [6, 2, 8, 0, 4, 7, 9, None, None, 3, 5]
+    root = TreeNode.fromList(nums)
+    c = s.lowestCommonAncestor(root, root.left, root.right)
+    print(c)
+    r = s.lowestCommonAncestor2(root, root.left, root.right)
+    print(r)
