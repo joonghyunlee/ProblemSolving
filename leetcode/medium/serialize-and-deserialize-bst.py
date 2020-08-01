@@ -69,13 +69,14 @@ class Codec:
             while p:
                 if p.val > node.val:
                     if not p.left:
-                        return p
+                        p.left = node
+                        return
                     p = p.left
                 else:
                     if not p.right:
-                        return p
+                        p.right = node
+                        return
                     p = p.right
-            return p
 
         if not data:
             return None
@@ -84,11 +85,7 @@ class Codec:
         root = TreeNode(nums[0])
         for num in nums[1:]:
             node = TreeNode(num)
-            parent = helper(root, node)
-            if parent.val > node.val:
-                parent.left = node
-            else:
-                parent.right = node
+            helper(root, node)
 
         return root
 
